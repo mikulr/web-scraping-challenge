@@ -27,7 +27,7 @@ def scrape():
     mars_data = scrape_mars.scrape_info() 
 
     # Insert the record
-    mongo.db.collection.update_one({}, {"$set": mars_data}, upsert=True)
+    mongo.db.collection.update_many({}, {"$set": mars_data}, upsert=True)
 
      # Redirect back to home page
     return redirect("/")
