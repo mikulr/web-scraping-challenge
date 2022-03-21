@@ -41,20 +41,21 @@ def scrape_info():
     df.columns = ['Statistic', 'Mars', 'Earth']
     df = df.iloc[1:]
     del df['Earth']
-    df=df.set_index("Statistic")
    
     df2= tables[1]
     df2.columns=['Statistic', 'Mars']
-    df2=df2.set_index("Statistic")
 
     frames = [df, df2]
-    result = pd.concat(frames)
-    result.index.name = None
-
-    mars_facts = result.to_html(header=False)
+    result = pd.concat(frames,ignore_index=True)
+    
+    mars_facts = result.to_dict('records')
 
     #HEMISPHERES
+    executable_path = {'executable_path': ChromeDriverManager().install()}
+    browser = Browser('chrome', **executable_path, headless=False)  
+    
     url = 'https://marshemispheres.com'
+    browser.visit(url)
     response = requests.get(url)
     soup = bs(response.text, "html.parser") 
 
@@ -63,14 +64,18 @@ def scrape_info():
     hemisphere_image_urls=[]
 
     for x in response:
+        
+         #using soup grab title 
         title= x.h3.text
-        base_link=x.find('img', class_="thumb")['src']
-        strp_link= base_link[40:]
-        fix_link= strp_link.rstrip("_thumb.png")
-        img_url=(f"https://marshemispheres.com/images/{fix_link}")
+        #find  page with image
+        links= x.find("a", class_="itemLink product-item")['href']
+        browser.visit(f"https://marshemispheres.com/{links}")
+        #find the link
+        img_url = browser.find_by_text('Sample')['href']
+        #append to dict
         hemisphere_image_urls.append({'title': title, 'img_url': img_url})
 
-
+    
     # Store data in a dictionary
     mars_data = {
         "news_title": news_title,

@@ -3,6 +3,7 @@
 
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>All Mars, All The Time </title>
   <!-- reset style sheet to set baseline-->
   <link rel="stylesheet" type="text/css" href="static/reset.css">
@@ -14,68 +15,77 @@
   <link rel="stylesheet" type="text/css" href="/static/style.css">
 </head>
 
-<body >
+<body>
 
-  <div class="container text-center">
-    <div class="box">
-      <h1>Mars</h1>
-      <h2> Tell me all about it..... </h2>
-      <a class="btn btn-success btn-lg" href="/scrape" role="button">Get Data!</a>
+  <div class="container col-xxl-8 px-4 py-5">
+    <div class="row flex-lg-row-reverse align-items-center g-5 py-5 ">
+      <div class="col-10 col-sm-8 col-lg-6">
+        <img src="{{ mars.featured_image_url }}" class="d-block mx-lg-auto img-fluid" alt="Boring Featured Image"
+          width="700" height="500" loading="lazy">
+      </div>
+      <div class="col-lg-6 ">
+        <h1 class="display-1 fw-bold lh-1 mb-3">Mars....</h1>
+        <p class="lead display-4">Explore the <span font-weight-bold>RED</span>  planet!</p>
+        <div class="d-grid gap-2 d-md-flex justify-content-md-start">
+          <a class="btn btn-danger btn-lg" href="/scrape" role="button">Get Data!</a>
+        </div>
+      </div>
     </div>
   </div>
 
 
   <div class="container">
-    <div class="row">
-      <div class="col col-lg-4">
-        <h2>Latest News</h2>
-        <h5>{{mars.news_title}}</h5>
-        <p lead>{{mars.news_p}}</p>
-        <a href="https://mars.nasa.gov/news/" class="btn btn-success center">Read More News</a>
-      </div>
-      <div class="col col-lg-8">
-        <h2>Featured Image</h2>
-        <img src="{{ mars.featured_image_url }}" alt="featured image">
-      </div>
-    </div>
-
-
-    <div class="container">
-      <div class="row">
-        {% for hem in mars.hemisphere_image_urls %}
-        <div class="col-lg-3">
-          <div class="card" style="width: 18rem;">
-            <img src="{{hem.img_url}}" class="img-thumbnail" alt="...">
-            <h5 class="card-title">{{ hem.title }}</h5>
-            <a href="{{hem.img_url}}" class="btn btn-success">Download This Image</a>
-          </div>
+    <div class="row flex-lg-row align-items-center g-5 py-5">
+      <div class="col col-lg-6">
+        <div class="h-100 p-5 text-white bg-dark rounded-3">
+          <h2 class="display-4">Latest News</h2>
+          <h5>{{mars.news_title}}</h5>
+          <p lead>{{mars.news_p}}</p>
+          <a href="https://mars.nasa.gov/news/" class="btn btn-danger center">Read More News</a>
         </div>
-        {% endfor %}
+      </div>
+      <div class="col col-lg-6">
+        <div class=" p-1 text-white text-center bg-dark border rounded-3">
+          <h2 class="display-4">Mars Facts</h2>
+          <table class="table"> 
+            <tr>
+              {% for fact in mars.mars_facts %}
+              <th class="text-white">{{ fact.Statistic }}</th>
+              <td class="text-muted" >{{ fact.Mars }}</td>
+            </tr>{% endfor %}
+          </table>
+
+        </div>
       </div>
     </div>
+  </div>
 
 
-
-
-    <div class="container">
-      <div class="row">
-        <table class="table table-success table-striped">{{mars.mars_facts |safe}}</table>
+  <div class="container">
+    <div class="row lg-row align-items-center">
+      <h2 class="display-4 text-center text-dark rounded-3">Hemisphere Images</h2>
+      {% for hem in mars.hemisphere_image_urls %}
+      <div class="col-lg-3">
+        <div class="card" style="width: 18rem;">
+          <img src="{{hem.img_url}}" alt="{{ hem.title }}" class="img-thumbnail" loading="lazy">
+          <h5 class="card-title">{{ hem.title }}</h5>
+          <a href="{{hem.img_url}}" class="btn btn-danger">Download This Image</a>
+        </div>
       </div>
+      {% endfor %}
     </div>
-
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-      integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-      crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
-      integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
-      crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
-      integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
-      crossorigin="anonymous"></script>
+  </div>
 
 
-
-
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+    integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+    crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+    integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+    crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+    integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+    crossorigin="anonymous"></script>
 
 </body>
 

@@ -1,4 +1,4 @@
-body{
-  background:#E9EDF0;
-}
+$body-bg: #E9EDF0;
 
+.pop{color:red;
+font-weight: bolder;}
