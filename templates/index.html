@@ -3,69 +3,78 @@
 
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>All About Mars</title>
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <title>All Mars, All The Time </title>
+  <!-- reset style sheet to set baseline-->
+  <link rel="stylesheet" type="text/css" href="static/reset.css">
+  <!-- Bootstrap and Bootstrap icons-->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
+  <!-- Internal style sheet to set colors and formatting of certain aspects-->
+  <link rel="stylesheet" type="text/css" href="/static/style.css">
 </head>
 
-<body>
+<body >
 
-  <div class="jumbotron text-center">
-    <h1>Mars</h1>
-    <h4> Tell me all about it..... </h4>
-    <p><a class="btn btn-success btn-lg" href="/scrape" role="button">Get Data!</a></p>
-  </div>
-
-
-  <div class="comp_container">
-    <div class="row">
-      <div class="col-md-8">
-        <div class="box">
-          <h2 class="box-header text-center">Latest News</h2>
-          <h5 text-center>{{mars.news_title}}</h5>
-          <p lead>{{mars.news_p}}</p>
-          <a href="https://mars.nasa.gov/news/" class="btn btn-success center">Read More News</a>
-        </div>
-      </div>
-      <div class="col-md-4">
-        <div class="box">
-          <h2 class="box-header text-center">Featured Image</h2>
-          <img src="{{ mars.featured_image_url }}" alt="featured image">
-        </div>
-      </div>
+  <div class="container text-center">
+    <div class="box">
+      <h1>Mars</h1>
+      <h2> Tell me all about it..... </h2>
+      <a class="btn btn-success btn-lg" href="/scrape" role="button">Get Data!</a>
     </div>
   </div>
 
+
   <div class="container">
-    <h2 class="box-header text-center">Sweet Mars Facts</h2>
-    {{mars.mars_facts}}
-    <a href="https://galaxyfacts-mars.com" class="btn btn-success center">See More Facts</a>
-  </div>
-
-
-
-  <!--{% for dog in dogs %}-->
-  
-
-
-  <div class="comp_container">
     <div class="row">
-        <div class="col-md-6">
-            <div class="thumbnail">
-                <a href="actors.html" class="text-decoration-none">
-                    <img src="" alt="..." class="img-thumbnail float-right">
-                    <h3 class="lead text-center"></h3>
-                </a>
-            </div>
-      
-              
+      <div class="col col-lg-4">
+        <h2>Latest News</h2>
+        <h5>{{mars.news_title}}</h5>
+        <p lead>{{mars.news_p}}</p>
+        <a href="https://mars.nasa.gov/news/" class="btn btn-success center">Read More News</a>
+      </div>
+      <div class="col col-lg-8">
+        <h2>Featured Image</h2>
+        <img src="{{ mars.featured_image_url }}" alt="featured image">
+      </div>
+    </div>
 
-                <!--{% endfor %}-->
+
+    <div class="container">
+      <div class="row">
+        {% for hem in mars.hemisphere_image_urls %}
+        <div class="col-lg-3">
+          <div class="card" style="width: 18rem;">
+            <img src="{{hem.img_url}}" class="img-thumbnail" alt="...">
+            <h5 class="card-title">{{ hem.title }}</h5>
+            <a href="{{hem.img_url}}" class="btn btn-success">Download This Image</a>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
 
 
 
-  
+
+    <div class="container">
+      <div class="row">
+        <table class="table table-success table-striped">{{mars.mars_facts |safe}}</table>
+      </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+      integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+      crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+      integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+      crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+      integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+      crossorigin="anonymous"></script>
+
+
+
 
 
 </body>

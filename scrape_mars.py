@@ -4,7 +4,6 @@ from webdriver_manager.chrome import ChromeDriverManager
 import requests
 import pymongo
 import pandas as pd
-from pretty_html_table import build_table
 
 
 def scrape_info():
@@ -33,6 +32,7 @@ def scrape_info():
     img_url = soup.find("img", class_="fancybox-image")["src"]
     featured_image_url = (f"https://spaceimages-mars.com/{img_url}")
 
+
     #MARS FACTS
     url = 'https://galaxyfacts-mars.com'
     tables = pd.read_html(url)
@@ -51,7 +51,7 @@ def scrape_info():
     result = pd.concat(frames)
     result.index.name = None
 
-    mars_facts = build_table(result, 'green_dark', index=True, width='auto')
+    mars_facts = result.to_html(header=False)
 
     #HEMISPHERES
     url = 'https://marshemispheres.com'
@@ -76,9 +76,12 @@ def scrape_info():
         "news_title": news_title,
         "news_p": news_p, 
         "featured_image_url": featured_image_url,
-        "mars_facts": mars_facts,
-        "hemisphere_image_urls": hemisphere_image_urls
-        }
+        "hemisphere_image_urls": hemisphere_image_urls, 
+        "mars_facts": mars_facts
+
+    }
+
+    browser.quit()
 
     # Return results
     return mars_data
